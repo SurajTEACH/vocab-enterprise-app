@@ -15,3 +15,4 @@ ENV PORT=8085
 EXPOSE 8085
 
 ENTRYPOINT ["java", "-Dserver.port=${PORT}", "-jar", "app.jar"]
+
