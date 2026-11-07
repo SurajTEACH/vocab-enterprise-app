@@ -1,0 +1,20 @@
+# Backend Build Output
+backend/target/
+*.jar
+*.war
+
+# Frontend Dependencies & Build Output
+frontend/node_modules/
+node_modules/
+frontend/.expo/
+frontend/dist/
+frontend/web-build/
+.expo/
+dist/
+
+# Logs & Environment Secrets
+*.log
+.env.local
+.env.production
+.DS_Store
+Thumbs.db
