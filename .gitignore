@@ -18,3 +18,4 @@ dist/
 .env.production
 .DS_Store
 Thumbs.db
+
