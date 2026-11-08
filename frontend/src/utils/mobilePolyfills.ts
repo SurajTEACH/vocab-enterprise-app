@@ -89,3 +89,4 @@ if (typeof win.alert !== 'function') {
 }
 
 export {};
+
