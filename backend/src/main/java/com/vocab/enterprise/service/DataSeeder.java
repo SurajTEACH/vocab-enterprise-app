@@ -55,7 +55,7 @@ public class DataSeeder implements CommandLineRunner {
         User admin = User.builder()
                 .username("surajshah1509")
                 .email("surajshah1509@gmail.com")
-                .password(passwordEncoder.encode("Suraj9981"))
+                .password(passwordEncoder.encode("Suraj@9981"))
                 .fullName("Suraj Shah")
                 .role(User.Role.ADMIN)
                 .currentStreak(15)
@@ -66,18 +66,27 @@ public class DataSeeder implements CommandLineRunner {
     }
 
     private void seedAdminIfNotExists() {
-        if (userRepository.findByEmail("surajshah1509@gmail.com").isEmpty()) {
-            User admin = User.builder()
-                    .username("surajshah1509")
-                    .email("surajshah1509@gmail.com")
-                    .password(passwordEncoder.encode("Suraj9981"))
-                    .fullName("Suraj Shah")
-                    .role(User.Role.ADMIN)
-                    .currentStreak(15)
-                    .totalXp(2500)
-                    .build();
-            userRepository.save(admin);
-        }
+        userRepository.findByEmail("surajshah1509@gmail.com").ifPresentOrElse(
+            existing -> {
+                existing.setPassword(passwordEncoder.encode("Suraj@9981"));
+                existing.setRole(User.Role.ADMIN);
+                existing.setUsername("surajshah1509");
+                existing.setFullName("Suraj Shah");
+                userRepository.save(existing);
+            },
+            () -> {
+                User admin = User.builder()
+                        .username("surajshah1509")
+                        .email("surajshah1509@gmail.com")
+                        .password(passwordEncoder.encode("Suraj@9981"))
+                        .fullName("Suraj Shah")
+                        .role(User.Role.ADMIN)
+                        .currentStreak(15)
+                        .totalXp(2500)
+                        .build();
+                userRepository.save(admin);
+            }
+        );
     }
 
     private void seedVocabData() {
