@@ -9,7 +9,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/daily")
+@RequestMapping({"/api/daily", "/daily"})
 @RequiredArgsConstructor
 public class DailyChallengeController {
 

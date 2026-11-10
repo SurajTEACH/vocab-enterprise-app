@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping({"/api/analytics", "/api/manager/analytics"})
+@RequestMapping({"/api/analytics", "/analytics", "/api/manager/analytics", "/manager/analytics"})
 @RequiredArgsConstructor
 public class AnalyticsController {
 

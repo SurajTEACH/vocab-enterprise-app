@@ -60,6 +60,7 @@ public class SecurityConfig {
                 .requestMatchers(
                     "/error",
                     "/api/auth/**",
+                    "/auth/**",
                     "/swagger-ui/**",
                     "/v3/api-docs/**",
                     "/api-docs/**",
@@ -68,26 +69,28 @@ public class SecurityConfig {
                     "/ws/**",
                     "/ws/info/**",
                     "/api/analytics/**",
-                    "/api/manager/analytics/**"
+                    "/analytics/**",
+                    "/api/manager/analytics/**",
+                    "/manager/analytics/**"
                 ).permitAll()
 
                 // ── 2. Read-Only Public Learning & Preview Endpoints ────────
-                .requestMatchers(HttpMethod.GET, "/api/daily/challenge").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/manager/words/day-study").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/manager/words", "/api/manager/words/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/manager/chapters", "/api/manager/chapters/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/pyq/exams", "/api/pyq/papers").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/pyq/sheets/categories", "/api/pyq/sheets/papers").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/daily/challenge", "/daily/challenge").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/manager/words/day-study", "/manager/words/day-study").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/manager/words", "/api/manager/words/**", "/manager/words", "/manager/words/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/manager/chapters", "/api/manager/chapters/**", "/manager/chapters", "/manager/chapters/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/pyq/exams", "/api/pyq/papers", "/pyq/exams", "/pyq/papers").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/pyq/sheets/categories", "/api/pyq/sheets/papers", "/pyq/sheets/categories", "/pyq/sheets/papers").permitAll()
 
                 // ── 3. Authenticated User & Profile Endpoints ───────────────
-                .requestMatchers("/api/manager/profile/**").authenticated()
-                .requestMatchers(HttpMethod.PUT, "/api/manager/profile").authenticated()
-                .requestMatchers(HttpMethod.POST, "/api/daily/submit-test").authenticated()
+                .requestMatchers("/api/manager/profile/**", "/manager/profile/**").authenticated()
+                .requestMatchers(HttpMethod.PUT, "/api/manager/profile", "/manager/profile").authenticated()
+                .requestMatchers(HttpMethod.POST, "/api/daily/submit-test", "/daily/submit-test").authenticated()
 
                 // ── 4. Manager & Admin Strict RBAC Management Endpoints ─────
-                .requestMatchers("/api/manager/students", "/api/manager/students/**").hasAnyRole("MANAGER", "ADMIN")
-                .requestMatchers("/api/manager/permissions", "/api/manager/permissions/**").hasAnyRole("MANAGER", "ADMIN")
-                .requestMatchers("/api/manager/scores", "/api/manager/scores/**").hasAnyRole("MANAGER", "ADMIN")
+                .requestMatchers("/api/manager/students", "/api/manager/students/**", "/manager/students", "/manager/students/**").hasAnyRole("MANAGER", "ADMIN")
+                .requestMatchers("/api/manager/permissions", "/api/manager/permissions/**", "/manager/permissions", "/manager/permissions/**").hasAnyRole("MANAGER", "ADMIN")
+                .requestMatchers("/api/manager/scores", "/api/manager/scores/**", "/manager/scores", "/manager/scores/**").hasAnyRole("MANAGER", "ADMIN")
                 .requestMatchers(HttpMethod.POST, "/api/manager/chapters/**", "/api/manager/words/**", "/api/manager/questions/**").hasAnyRole("MANAGER", "ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/api/manager/chapters/**", "/api/manager/words/**").hasAnyRole("MANAGER", "ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/api/manager/chapters/**", "/api/manager/words/**").hasAnyRole("MANAGER", "ADMIN")

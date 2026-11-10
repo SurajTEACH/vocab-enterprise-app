@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/pyq")
+@RequestMapping({"/api/pyq", "/pyq"})
 @RequiredArgsConstructor
 public class PyqController {
 

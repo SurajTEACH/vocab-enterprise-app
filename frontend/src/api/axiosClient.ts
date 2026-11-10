@@ -1,7 +1,11 @@
 import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 
-// Enterprise Base API URL from Environment Variable
-const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:8085/api';
+// Enterprise Base API URL from Environment Variable (Normalizing /api suffix)
+let rawBaseUrl = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:8085/api';
+if (rawBaseUrl && !rawBaseUrl.endsWith('/api') && !rawBaseUrl.endsWith('/api/')) {
+  rawBaseUrl = rawBaseUrl.replace(/\/+$/, '') + '/api';
+}
+const API_BASE_URL = rawBaseUrl;
 
 export const axiosClient: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,

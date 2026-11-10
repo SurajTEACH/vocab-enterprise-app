@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/manager")
+@RequestMapping({"/api/manager", "/manager"})
 @RequiredArgsConstructor
 public class ManagerController {
 
