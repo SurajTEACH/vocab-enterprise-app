@@ -62,56 +62,7 @@ public class DatabaseConfig {
                     }
                     if (!StringUtils.hasText(pass)) {
                         pass = parts[1];
-                    }
-                }
 
-                StringBuilder jdbc = new StringBuilder("jdbc:mysql://").append(host).append(":").append(port).append(path);
-                if (StringUtils.hasText(query)) {
-                    String fixedQuery = query.replace("ssl-mode=", "sslMode=");
-                    jdbc.append("?").append(fixedQuery);
-                    if (!fixedQuery.contains("allowPublicKeyRetrieval")) {
-                        jdbc.append("&allowPublicKeyRetrieval=true");
-                    }
-                } else {
-                    jdbc.append("?sslMode=REQUIRED&allowPublicKeyRetrieval=true");
-                }
-                url = jdbc.toString();
-                log.info("Auto-converted raw mysql:// URI to valid JDBC URL for cloud database.");
-            } catch (Exception e) {
-                log.warn("Could not parse URI structure, prepending jdbc:: {}", e.getMessage());
-                url = "jdbc:" + url;
-            }
-        }
 
-        // If still empty or not provided, fallback to in-memory H2
-        if (!StringUtils.hasText(url)) {
-            url = "jdbc:h2:mem:Ward_Boost_app;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MySQL";
-            user = "sa";
-            pass = "";
-        }
-
-        log.info("Initializing DataSource with URL: {}", url.replaceAll(":[^/@]+@", ":****@"));
-
-        HikariConfig config = new HikariConfig();
-        config.setJdbcUrl(url);
-        if (StringUtils.hasText(user)) {
-            config.setUsername(user);
-        }
-        if (StringUtils.hasText(pass)) {
-            config.setPassword(pass);
-        }
-
-        if (url.contains(":mysql:")) {
-            config.setDriverClassName("com.mysql.cj.jdbc.Driver");
-            config.setMaximumPoolSize(5); // Render free tier friendly
-            config.setMinimumIdle(1);
-            config.setConnectionTimeout(30000);
-            config.setIdleTimeout(600000);
-            config.setMaxLifetime(1800000);
-        } else if (url.contains(":h2:")) {
-            config.setDriverClassName("org.h2.Driver");
-        }
-
-        return new HikariDataSource(config);
     }
 }
